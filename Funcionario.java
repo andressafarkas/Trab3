@@ -55,7 +55,7 @@ public class Funcionario{
     }
 
     public String toString() {
-        return "Funcionario " + nome + "carga horaria: " + carga_horaria + ", cpf=" + cpf + ", filhos=" + filhos + ", valor_hora=" + valor_hora;
+        return "Funcionario (a) " + nome + ", carga horaria: " + carga_horaria + ", CPF = " + cpf + ", valor da hora = " + valor_hora + ", filhos = " + filhos;
     }
 
     public double CalculaSalario(double getValor_hora, double getCarga_horaria){
