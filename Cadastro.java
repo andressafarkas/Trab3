@@ -13,7 +13,7 @@ public class Cadastro {
         funcionarios[tam ++] = new Funcionario("Gabriel", "02178591049", 13.8, 32, true);   
     }
     
-    public void cadastrarFuncionario() {
+    public boolean cadastrarFuncionario() {
         Scanner s = new Scanner(System.in);
         System.out.print("Digite o nome do funcionário: ");
         String nome = s.nextLine();
@@ -23,11 +23,13 @@ public class Cadastro {
         double valor_hora = s.nextDouble();
         System.out.print("Digite a carga horária semanal do funcionário: ");
         double carga_horaria = s.nextDouble();
-        System.out.println("O funcionário tem filhos? [true / false]");
+        System.out.print("O funcionário tem filhos? [true / false] ");
         boolean filhos = s.nextBoolean();
+
         funcionarios[tam++] = new Funcionario(nome, cpf, valor_hora, carga_horaria, filhos);
 
         System.out.println("Funcionário cadastrado com sucesso!");
+        return true;
     }
 
     public void listarFuncionarios() {
@@ -36,46 +38,43 @@ public class Cadastro {
         }
     }
 
-    /* public void removerFuncionario(String cpf){
-        System.out.print("Informe o CPF do funcionário a ser removido: ");
+     public void removerFuncionario(String cpf){
         for (int i = 0; i < tam; i++) {
-            if(funcionarios[i].getCpf() = cpf){
-
+            if(funcionarios[i].getCpf().equals(cpf)){
+                funcionarios[i] = null;
+                tam --;
             }
         }
     }
-    */
+    
 
-     /* public void editarSalario(String cpf){
-        System.out.print("Informe o CPF do funcionário: ");
+     public void editarSalario(String cpf, double valor_hora){
         for (int i = 0; i < tam; i++) {
-            if(funcionarios[i].getCpf() = cpf){
-                funcionarios[i].setValor_hora();
-                funcionarios[i].CalculaSalario();
+            if(funcionarios[i].getCpf().equals(cpf)){
+                funcionarios[i].setValor_hora(valor_hora);
             }
         }
     }
 
-    */
-
-    public Funcionario maiorSalario() {
+    /* public Funcionario maiorSalario() {
         Funcionario maior = funcionarios[0];
         for (int i = 1; i < tam; i++) {
             if (funcionarios[i].CalculaSalario(funcionarios[i].getCarga_horaria(), funcionarios[i].getValor_hora()) > maior.CalculaSalario(funcionarios[i].getCarga_horaria(), funcionarios[i].getValor_hora())) {
                 maior = funcionarios[i];
             }
-        }
+        } 
         return maior;
     }
+    */
 
-    public double percentualFilhos() {
+    public void percentualFilhos() {
         int filhos = 0;
         for (int i = 0; i < tam; i++) {
             if (funcionarios[i].getFilhos() == true){
                 filhos ++;
             }
         }
-        return filhos/tam;
+        System.out.println((double)filhos/tam + "%");
     }
     
     public static void main (String[] args){
@@ -93,32 +92,61 @@ public class Cadastro {
         System.out.println("7 - Sair do programa");
         System.out.print("Digite a opção desejada: ");
 
-        int opcao = s.nextInt();
+        String opcao = s.nextLine();
+        boolean sair = false;
 
-        switch (opcao){
-            case 1:
-                c.cadastrarFuncionario();
-                break;
-
-            case 2:
-                c.listarFuncionarios();
-                break;
-
-            case 3:
-
-            case 4:
-
-            case 5:
-                c.maiorSalario();
-                break;
-            
-            case 6:
-                c.percentualFilhos();
-                break;
-
-            case 7:
-                System.out.println("Saindo...");
-                break;
+        while (sair == false){
+            switch (opcao){
+                case "1":  // ok
+                    c.cadastrarFuncionario();
+                    break;
+    
+                case "2":  // ok
+                    c.listarFuncionarios();
+                    break;
+    
+                case "3":  // Verificar corrigir posições após excluir
+                    System.out.print("Digite o CPF do funcionário a ser removido: ");
+                    String cpf_remover = s.nextLine();
+                    c.removerFuncionario(cpf_remover);
+                    break;
+    
+                case "4":  // Verificar menu imprimindo 2x
+                    System.out.print("Digite o CPF do funcionário: ");
+                    String cpf = s.nextLine();
+                    System.out.print("Digite o novo valor da hora do funcionário: ");
+                    double valor_hora = s.nextDouble();
+                    c.editarSalario(cpf, valor_hora);
+                    System.out.println("Salário do funcionário editado!");
+                    break;
+    
+                case "5":
+                    // c.maiorSalario();
+                    break;
+                
+                case "6":  // acho que ok
+                    c.percentualFilhos();
+                    break;
+    
+                case "7":  // ok
+                    System.out.println("Saindo...");
+                    sair = true;
+                    break;
+            }
+    
+            if (sair == false){
+                System.out.println("Menu");
+                System.out.println("1 - Cadastrar novo funcionário");
+                System.out.println("2 - Listar funcionários cadastrados");
+                System.out.println("3 - Remover funcionário");
+                System.out.println("4 - Editar salário do funcionário");
+                System.out.println("5 - Imprimir funcionário com maior salário");
+                System.out.println("6 - Imprimir percentual de funcionários que possuem filhos");
+                System.out.println("7 - Sair do programa");
+                System.out.print("Digite a opção desejada: ");
+        
+                opcao = s.nextLine();
+            }
         }
         s.close();
     }
