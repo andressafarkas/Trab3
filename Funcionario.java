@@ -39,11 +39,18 @@ public class Funcionario{
     }
 
     public double getCarga_horaria() {
+        if(carga_horaria > 44){
+            carga_horaria = 44;
+        } 
         return carga_horaria;
     }
 
     public void setCarga_horaria(double carga_horaria) {
-        this.carga_horaria = carga_horaria;
+        if(carga_horaria > 44){
+            this.carga_horaria = 44;
+        }else{
+            this.carga_horaria = carga_horaria;
+        } 
     }
 
     public boolean getFilhos() {
@@ -58,11 +65,11 @@ public class Funcionario{
         return "Funcionario (a) " + nome + ", carga horaria: " + carga_horaria + ", CPF = " + cpf + ", valor da hora = " + valor_hora + ", filhos = " + filhos;
     }
 
-    public double CalculaSalario(double getValor_hora, double getCarga_horaria){
-        if(getCarga_horaria > 44){
-            getCarga_horaria = 44;
+    public double CalculaSalario(){
+        if(carga_horaria > 44){
+            carga_horaria = 44;
         }
-        double salario = getCarga_horaria * getValor_hora * 4;
+        double salario = carga_horaria * valor_hora * 4;
         return salario;
     }  
   
